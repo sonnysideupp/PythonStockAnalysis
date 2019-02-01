@@ -18,7 +18,7 @@ end = dt.datetime(2018,12,31)
 df = yf.download('^GSPC','2016-01-01','2018-01-01')
 adjusted = df['Adj Close']
 volume = df['Volume']
-df['Return'] = np.array([0]*len(AAPL))
+df['Return'] = np.array([0]*len(df))
 for i in range(1,len(df.Return)):
     df.loc[df.index[i],['Return']] = (df['Adj Close'][i]/df['Adj Close'][i-1]) - 1
 series = df['Return']
