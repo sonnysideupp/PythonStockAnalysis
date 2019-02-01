@@ -8,17 +8,19 @@ from pandas.plotting import lag_plot
 from pandas.plotting import autocorrelation_plot
 from pandas import DataFrame
 from pandas import concat
-
+import numpy as np
 style.use('ggplot')
 start = dt.datetime(2000,1,1)
 end = dt.datetime(2018,12,31)
 
 
 
-df = yf.download('AAPL','2016-01-01','2018-01-01')
+df = yf.download('^GSPC','2016-01-01','2018-01-01')
 adjusted = df['Adj Close']
 volume = df['Volume']
-df['Return'] = df['Close'] - df['Open']
+df['Return'] = np.array([0]*len(AAPL))
+for i in range(1,len(df.Return)):
+    df.loc[df.index[i],['Return']] = (df['Adj Close'][i]/df['Adj Close'][i-1]) - 1
 series = df['Return']
 lag_plot(series)
 autocorrelation_plot(series)
